@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+ <!-- 日期格式 -->
+	<constant name="struts.ui.theme" value="simple"></constant>
+	<package name="default" namespace="/" extends="struts-default">
+		<action name="fingEmpBysn" class="empAction" method="fingEmpBysn"></action>
+		<action name="login" class="empAction"  method="login">
+			<result name="success">/index.jsp</result>
+			<result name="login">/login.jsp</result>
+		</action>
+		<!--全局结果  错误处理  -->
+		<action name="random" class="bdqn.sshoa.web.RandomNumUtilAction">
+			<result type="stream">
+				<param name="contentType">image/jpeg</param>
+				<param name="inputName">inputStream</param>
+			</result>
+		</action>
+		
+		<!-- 请求显示查看报销单列表 -->
+		<action name="claimVoucher_searchClaimVoucher" class="bdqn.sshoa.web.ClaimVoucherAction" method="searchClaimVoucher">
+			<result name="success">/jsp/claim/claim_voucher_list.jsp</result>
+		</action>
+		<!--请求显示添加报销单-->
+		<action name="claimVoucher_toAdd" class="bdqn.sshoa.web.ClaimVoucherAction" method="toAdd">
+			<result name="success">/jsp/claim/claim_voucher_edit.jsp</result>
+		</action>
+		<!--处理报销单-->
+		<action name="addBizClaimVoucher" class="bdqn.sshoa.web.ClaimVoucherAction" method="addBizClaimVoucher">
+			<result name="success" type="redirectAction">claimVoucher_searchClaimVoucher</result>
+			<result name="error">/jsp/claim/claim_voucher_edit.jsp</result>
+		</action>
+		<!--查看报销单-->
+		<action name="claimVoucher_toCheck" class="bdqn.sshoa.web.ClaimVoucherAction" method="claimVoucher_toCheck">
+		<result name="success" >/jsp/claim/claim_voucher_check.jsp</result>
+		</action>
+		
+		<!--处理审核-->
+		<action name="checkResult_checkClaimVoucher" class="bdqn.sshoa.web.ClaimVoucherAction" method="doClaimVoucherCheck">
+			<result name="success" type="redirectAction">claimVoucher_searchClaimVoucher</result>
+		</action>
+	</package>
+</struts>    
